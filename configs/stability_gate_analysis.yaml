@@ -1,0 +1,17 @@
+version: 1
+analysis_status: exploratory_development_only_after_locked_heldout_evaluation
+split: development
+model: regime_dynamic_gate_lstm
+model_seed_bases: [1729, 2026, 27182, 31415, 104729]
+posterior_shift_event_quantile: 0.90
+response_lags_sessions: [0, 1, 2, 3, 4, 5]
+variants:
+  with_stability_penalty:
+    lambda_sparsity: 0.005
+    lambda_stability: 0.01
+    reference_ablation_variant: selected_candidate
+  without_stability_penalty:
+    lambda_sparsity: 0.005
+    lambda_stability: 0.0
+    reference_ablation_variant: no_stability_penalty
+interpretation: paired_gate_dynamics_comparison_only; not_used_for_selection; no_inferential_claims

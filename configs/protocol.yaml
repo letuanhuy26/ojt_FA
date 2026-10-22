@@ -1,0 +1,58 @@
+version: 1
+status: frozen_for_confirmation_and_final
+market:
+  symbol: SPY
+  description: SPDR S&P 500 ETF Trust, daily bars
+  user_confirmation: pending
+data:
+  provider: Yahoo Finance via yfinance
+  start: "1993-01-01"
+  end_exclusive: "2026-01-01"
+  fields: [Open, High, Low, Close, Adj Close, Volume, Dividends, Stock Splits, Capital Gains]
+  adjusted_ohlc: multiply OHLC by Adj_Close / Close
+  raw_data_committed: false
+target:
+  name: next_session_open_to_close_direction
+  definition: "1[log(Adj_Close_(t+1) / Adj_Open_(t+1)) > 0]"
+  signal_time: after_close_t
+  execution_reference: open_t_plus_1
+  zero_return_class: negative
+  missing_target: drop
+features:
+  warmup_sessions: 60
+  columns:
+    - return_1
+    - intraday_return
+    - overnight_gap
+    - range_fraction
+    - volume_log_change
+    - momentum_5
+    - momentum_20
+    - momentum_60
+    - volatility_5
+    - volatility_20
+    - volatility_60
+regime:
+  estimator: diagonal_gaussian_hmm
+  states: 3
+  em_iterations: 100
+  covariance_floor: 0.0001
+  posterior: causal_forward_filter
+  fit_scope: training_fold_only
+evaluation:
+  split_unit: target_session_year
+  train_start: "1993-01-01"
+  train_end_exclusive: "2015-01-01"
+  development_years: [2015, 2016, 2017, 2018, 2019]
+  confirmation_start: "2020-01-01"
+  confirmation_end_exclusive: "2022-01-01"
+  final_start: "2022-01-01"
+  final_end_exclusive: "2026-01-01"
+  folds: expanding_window_one_calendar_year
+  primary_metric: matthews_correlation_coefficient
+  threshold: 0.5
+  random_seed: 1729
+  final_test_policy: untouched_until_model_freeze
+  confirmation_policy: evaluate_once_after_development_freeze
+  zero_intraday_return_counts_as_negative: true
+  economics: not_evaluated_in_development_pilot

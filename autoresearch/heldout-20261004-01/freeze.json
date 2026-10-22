@@ -1,0 +1,51 @@
+{
+  "status": "candidate_frozen_before_confirmation",
+  "frozen_at_utc": "2026-10-04T04:43:43.932974+00:00",
+  "frozen_commit": "5af84d50ceaf75a29b90b8f1b74d3ba2663e244b",
+  "market": "SPY (provisional single-ETF pilot)",
+  "selected_model": "regime_dynamic_gate_lstm",
+  "selected_config": {
+    "model": "regime_dynamic_gate_lstm",
+    "window": 60,
+    "hidden_size": 32,
+    "gate_hidden_size": 32,
+    "dropout": 0.0,
+    "epochs": 20,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.001,
+    "lambda_sparsity": 0.005,
+    "lambda_stability": 0.01,
+    "seed": 1729,
+    "device": "auto"
+  },
+  "selected_development_mean_mcc": 0.0331907033,
+  "development_campaign": "autoresearch/model-20261004-01/results.tsv",
+  "confirmation_period": [
+    "2020-01-01",
+    "2021-12-31"
+  ],
+  "final_period": [
+    "2022-01-01",
+    "2025-12-31"
+  ],
+  "run_policy": "one confirmation evaluation, then one final evaluation; no post-confirmation tuning",
+  "file_sha256": {
+    "configs/ours.yaml": "e179a94bcd25d02e3ea7dbccd0375af93159495705b3827f66fb728b77540c92",
+    "configs/protocol.yaml": "85b4162749744179da43d57284f0643dff7dbf53e6452aa211c0d9e8a14e7593",
+    "configs/heldout_analysis.yaml": "cd682ec5b70d26296f3885dbd948f51e58fb8a5ac5671d187ad8f4f775cc2c55",
+    "requirements.txt": "3b3b79d6d301812b9597d87c2d3100d462c6663b89972d33aa2c3cf71621dfa7",
+    "data/manifests/protocol.sha256": "4b40b2bac48ab7b873480000e9ad2b97952dd56bd4dd885c962192ac23b721dc",
+    "src/models/ours.py": "67441a3e77d90f4e24e92b17ad67be91145d0aa7decb03ed81cd3316206c261d",
+    "src/regimes/hmm.py": "07329918002e610b8bf454675764c7602f506304e85c2f5d6879fe0f267a40a4",
+    "src/data/features.py": "1e109165e91471aee7fc8736c904dbe6e3088af0fc1c4e644d7b7f295153ab9f",
+    "src/evaluation/walkforward.py": "fefb8e66723c000f700e574ce44e3b30d9b08f439f5524326a153d72eafe415d",
+    "src/evaluation/regime_cache.py": "731228327d176ba20707e00f93619ce4b79a743428e8b86c33e29392d7e076dd",
+    "scripts/freeze_candidate.py": "132b31b805c748d3d4cc4580e27027443e1f98890c704a7caaea80f2e5d30034",
+    "scripts/run_heldout.py": "1979bd59e8b2f4450e73969c3e3aca3da4ed7f8b439fab90e45dbfaf3eb81c56",
+    "scripts/analyze_heldout.py": "12c384f27fab1d902560ce47197609877ad25700460c1a3d4e2f72dee3bd063d",
+    "scripts/check_protocol.py": "f9f66c8842f00457bda7d6780c2f3c2f905c1417a66677c5ec545f4794f79fce",
+    "data/raw/SPY_yfinance_1993-2025.csv": "c4db25d3b093535051eaaba14a209c4b9dd9aa6dc2632479076eb4399482e600",
+    "data/processed/SPY_features_1993-2025.csv": "c7f5931aee8aa5af250c6fa29dd4c014bcd02d63493ddbb60c0854cea3fcfb91"
+  }
+}

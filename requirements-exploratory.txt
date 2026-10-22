@@ -1,0 +1,2 @@
+# Optional CPU-only package used for the post-hoc development XGBoost comparator.
+xgboost-cpu==3.4.1

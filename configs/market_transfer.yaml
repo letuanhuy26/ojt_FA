@@ -1,0 +1,65 @@
+version: 1
+status: exploratory_cross_market_configuration_transfer; does_not_replace_frozen_spy_protocol
+source_market:
+  symbol: SPY
+  frozen_model_configuration: configs/ours.yaml
+  description: Original SPY h=1 pilot settings; transferred without retuning
+provider:
+  name: Yahoo Finance historical prices via yfinance 1.7.0
+  start: "1993-01-01"
+  end_exclusive: "2026-01-01"
+  interval: 1d
+  auto_adjust: false
+  actions: true
+  raw_data_committed: false
+markets:
+  - region: United Kingdom
+    symbol: EWU
+    instrument: iShares MSCI United Kingdom ETF
+    role: US-listed country-equity proxy; external transfer market
+  - region: Japan
+    symbol: EWJ
+    instrument: iShares MSCI Japan ETF
+    role: US-listed country-equity proxy; external transfer market
+target:
+  name: next_session_open_to_close_direction
+  definition: "1[log(Adj_Close_(t+1) / Adj_Open_(t+1)) > 0]"
+  signal_time: after_close_t
+  execution_reference: open_t_plus_1
+  zero_return_class: negative
+  missing_target: drop
+features:
+  source: same 11 causal OHLCV features as configs/protocol.yaml
+  warmup_sessions: 60
+regime:
+  estimator: diagonal_gaussian_hmm
+  states: 3
+  em_iterations: 100
+  covariance_floor: 0.0001
+  posterior: causal_forward_filter
+  fit_scope: training_fold_only
+evaluation:
+  source_calendar_splits: configs/protocol.yaml
+  development_years: [2015, 2016, 2017, 2018, 2019]
+  confirmation_start: "2020-01-01"
+  confirmation_end_exclusive: "2022-01-01"
+  final_start: "2022-01-01"
+  final_end_exclusive: "2026-01-01"
+  primary_metric: matthews_correlation_coefficient
+  threshold: 0.5
+  random_seed: 1729
+  model_config: configs/ours.yaml
+  tuning: none; original SPY h=1 configuration transferred unchanged; models are refit within each asset
+  bootstrap: paired circular blocks of 20 target sessions; 10000 replicates; seed 1729; percentile 95% intervals for RC-SFG minus fixed Random Forest
+  interpretation: posthoc_exploratory_cross_market_configuration_transfer
+  economics: not_evaluated
+models:
+  compared: [regime_dynamic_gate_lstm, dynamic_gate_lstm, regime_as_feature_lstm, random_forest]
+  neural_configuration: configs/ours.yaml
+  random_forest: 300 trees; max_depth 5; min_samples_leaf 20
+data_rights:
+  status: unresolved for redistribution or manuscript submission
+  scope: local development only; keep all raw and derived observations out of Git
+outputs:
+  root: results/market_transfer_20261004_02
+  autoresearch_log: autoresearch/market-transfer-20261004-02

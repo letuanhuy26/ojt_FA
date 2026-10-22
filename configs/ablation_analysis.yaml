@@ -1,0 +1,20 @@
+version: 1
+analysis_status: exploratory_development_only_after_locked_heldout_evaluation
+base_config: configs/ours.yaml
+split: development
+primary_metric: mcc
+design: vary only sparsity and temporal-stability penalty coefficients; keep every other selected candidate field fixed
+variants:
+  selected_candidate:
+    lambda_sparsity: 0.005
+    lambda_stability: 0.01
+  no_sparsity_penalty:
+    lambda_sparsity: 0.0
+    lambda_stability: 0.01
+  no_stability_penalty:
+    lambda_sparsity: 0.005
+    lambda_stability: 0.0
+  no_gate_penalties:
+    lambda_sparsity: 0.0
+    lambda_stability: 0.0
+interpretation: descriptive_one_seed_development_ablation; not used to select or change the frozen candidate; no inferential claims

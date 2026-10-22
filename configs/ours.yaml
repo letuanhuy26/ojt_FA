@@ -1,0 +1,13 @@
+model: regime_dynamic_gate_lstm
+window: 60
+hidden_size: 32
+gate_hidden_size: 32
+dropout: 0.0
+epochs: 20
+batch_size: 256
+learning_rate: 0.001
+weight_decay: 0.001
+lambda_sparsity: 0.005
+lambda_stability: 0.01
+seed: 1729
+device: auto

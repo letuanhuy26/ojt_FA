@@ -1,0 +1,44 @@
+{
+  "retrieved_at_utc": "2026-10-04T03:18:49.964833+00:00",
+  "symbol": "SPY",
+  "provider": "Yahoo Finance historical prices via yfinance",
+  "yfinance_version": "1.7.0",
+  "python_version": "3.12.9",
+  "request": {
+    "start_inclusive": "1993-01-01",
+    "end_exclusive": "2026-01-01",
+    "interval": "1d",
+    "auto_adjust": false,
+    "actions": true
+  },
+  "file": "data/raw/SPY_yfinance_1993-2025.csv",
+  "sha256": "c4db25d3b093535051eaaba14a209c4b9dd9aa6dc2632479076eb4399482e600",
+  "rows": 8288,
+  "first_session": "1993-01-29",
+  "last_session": "2025-12-31",
+  "columns": [
+    "Date",
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "Adj Close",
+    "Volume",
+    "Dividends",
+    "Stock Splits",
+    "Capital Gains"
+  ],
+  "missing_by_column": {
+    "Date": 0,
+    "Open": 0,
+    "High": 0,
+    "Low": 0,
+    "Close": 0,
+    "Adj Close": 0,
+    "Volume": 0,
+    "Dividends": 0,
+    "Stock Splits": 0,
+    "Capital Gains": 0
+  },
+  "rights_status": "local development only; publication and redistribution rights unresolved"
+}

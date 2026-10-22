@@ -1,0 +1,19 @@
+version: 1
+comparison: regime_dynamic_gate_lstm_minus_random_forest
+primary_metric: matthews_correlation_coefficient
+threshold: 0.5
+bootstrap:
+  method: paired_moving_block
+  block_length_sessions: 20
+  replicates: 10000
+  seed: 1729
+  confidence_level: 0.95
+  interval: percentile
+report_metrics:
+  - mcc
+  - balanced_accuracy
+  - auroc
+  - brier
+  - log_loss
+parametric_p_values: false
+holm_adjustment: not_applicable_no_p_values

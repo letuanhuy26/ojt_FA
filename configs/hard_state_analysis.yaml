@@ -1,0 +1,7 @@
+version: 1
+analysis_status: exploratory_development_only_after_locked_heldout_evaluation
+split: development
+control: hard_state_one_hot_from_causal_filtered_posterior_argmax
+model: regime_dynamic_gate_lstm
+model_seed_bases: [1729, 2026, 27182, 31415, 104729]
+interpretation: fixed_hard_state_control_vs_soft_posterior; not_used_for_selection; no_heldout_evaluation

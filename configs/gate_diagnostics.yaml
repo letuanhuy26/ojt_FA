@@ -1,0 +1,9 @@
+version: 1
+analysis_status: exploratory_development_only_after_locked_heldout_evaluation
+split: development
+model: regime_dynamic_gate_lstm
+model_seed_bases: [1729, 2026, 27182, 31415, 104729]
+metric_replay_tolerance: 0.00000001
+posterior_shift_event_quantile: 0.90
+response_lags_sessions: [0, 1, 2, 3, 4, 5]
+interpretation: descriptive_gate_and_filtered_posterior_diagnostics; not_used_for_selection; no_inferential_claims

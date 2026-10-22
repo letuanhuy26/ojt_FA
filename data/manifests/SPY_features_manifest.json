@@ -1,0 +1,24 @@
+{
+  "raw_file": "data/raw/SPY_yfinance_1993-2025.csv",
+  "raw_sha256": "c4db25d3b093535051eaaba14a209c4b9dd9aa6dc2632479076eb4399482e600",
+  "feature_file": "data/processed/SPY_features_1993-2025.csv",
+  "feature_sha256": "c7f5931aee8aa5af250c6fa29dd4c014bcd02d63493ddbb60c0854cea3fcfb91",
+  "rows": 8227,
+  "first_feature_date": "1993-04-27",
+  "last_target_date": "2025-12-31",
+  "feature_columns": [
+    "return_1",
+    "intraday_return",
+    "overnight_gap",
+    "range_fraction",
+    "volume_log_change",
+    "momentum_5",
+    "momentum_20",
+    "momentum_60",
+    "volatility_5",
+    "volatility_20",
+    "volatility_60"
+  ],
+  "target": "next observed session adjusted close / adjusted open; zero is class 0",
+  "raw_manifest_sha256": "6a5042b2f56ddd3119b2e62061de6a36ec91f013326d96d5d63669a36c4f42df"
+}

@@ -1,0 +1,11 @@
+﻿.venv/
+__pycache__/
+*.py[cod]
+data/raw/*.csv
+data/processed/*.csv
+data/processed/*.npz
+results/
+autoresearch/*
+!autoresearch/heldout-20261004-01/
+autoresearch/heldout-20261004-01/*
+!autoresearch/heldout-20261004-01/freeze.json

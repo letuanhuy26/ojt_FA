@@ -1,0 +1,13 @@
+version: 1
+analysis_status: exploratory_development_only_after_locked_heldout_evaluation
+split: development
+market: SPY_provisional
+models: [selected_rc_sfg_seed_1729, random_forest, always_long]
+decision_threshold: 0.5
+position_rule: long_at_100_percent_of_equity_when_predicted_probability_ge_threshold; otherwise_cash
+execution: signal_after_close_t; enter_adjusted_open_t_plus_1; exit_adjusted_close_t_plus_1
+overlap: no_positions_held_overnight; at_most_one_intraday_position_per_session
+per_side_cost_scenarios_bps: [0, 1, 2.5, 5, 10]
+cost_definition: fixed_fractional_cost_on_entry_notional_and_exit_notional; excludes_market_impact_and_borrow
+annualization_sessions: 252
+interpretation: posthoc_development_sensitivity_only; no_profitability_claim; no_heldout_evaluation

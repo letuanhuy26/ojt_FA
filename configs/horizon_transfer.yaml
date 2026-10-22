@@ -1,0 +1,54 @@
+version: 1
+status: exploratory_cross_horizon_transfer; does_not_replace_frozen_h1_protocol
+market:
+  symbol: SPY
+  description: SPDR S&P 500 ETF Trust, daily bars
+  selection_status: provisional
+data:
+  source_file: data/raw/SPY_yfinance_1993-2025.csv
+  provider: Yahoo Finance via yfinance 1.7.0
+  adjusted_ohlc: multiply OHLC by Adj_Close / Close
+  raw_data_committed: false
+target:
+  horizons_sessions: [5, 20]
+  definition: "1[log(Adj_Close_(t+h) / Adj_Open_(t+1)) > 0]"
+  signal_time: after_close_t
+  execution_reference: open_t_plus_1
+  target_end: close_t_plus_h
+  zero_return_class: negative
+  missing_target: drop
+  overlapping_forecasts: true
+features:
+  source: same 11 causal OHLCV features as configs/protocol.yaml
+  warmup_sessions: 60
+regime:
+  estimator: diagonal_gaussian_hmm
+  states: 3
+  em_iterations: 100
+  covariance_floor: 0.0001
+  posterior: causal_forward_filter
+  fit_scope: training_fold_only
+evaluation:
+  train_start: "1993-01-01"
+  development_years: [2015, 2016, 2017, 2018, 2019]
+  confirmation_start: "2020-01-01"
+  confirmation_end_exclusive: "2022-01-01"
+  final_start: "2022-01-01"
+  final_end_exclusive: "2026-01-01"
+  split_unit: target_end_session
+  training_label_purge: train target_end_session must be earlier than evaluation block start
+  folds: expanding_window_one_calendar_year
+  primary_metric: matthews_correlation_coefficient
+  threshold: 0.5
+  random_seed: 1729
+  inference: paired circular moving-block bootstrap for frozen RC-SFG minus fixed Random Forest; block 20 sessions; 10000 replicates; seed 1729; percentile 95% interval
+  tuning: none; transfer the already frozen h=1 candidate configuration without horizon-specific tuning
+  heldout_interpretation: exploratory_posthoc_cross_horizon_transfer
+  economics: not_evaluated_due_to_overlapping_horizon_positions
+models:
+  compared: [regime_dynamic_gate_lstm, dynamic_gate_lstm, regime_as_feature_lstm, random_forest]
+  neural_configuration: configs/ours.yaml
+  random_forest: 300 trees; max_depth 5; min_samples_leaf 20
+outputs:
+  root: results/horizon_transfer_20261004
+  autoresearch_log: autoresearch/horizon-transfer-20261004-01
